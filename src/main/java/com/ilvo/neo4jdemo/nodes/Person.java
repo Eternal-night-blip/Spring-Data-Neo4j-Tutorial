@@ -1,6 +1,8 @@
 package com.ilvo.neo4jdemo.nodes;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.neo4j.core.schema.Id;
@@ -24,22 +26,22 @@ public class Person {
     private Integer bornYear;
 
     @Relationship("FOLLOWS")  //默认是OUTGOING方向
-    Set<Person> masters;
+    List<Person> masters;
 
     @Relationship("ACTED_IN")
-    Set<ActedIn> actedIns;
+    List<ActedIn> actedIns;
 
     @Relationship("REVIEWED")
-    Set<Reviewed> revieweds;
+    List<Reviewed> revieweds;
     
     @Relationship("DIRECTED")    
-    Set<Movie> directedMovies;
+    List<Movie> directedMovies;
     
     @Relationship("PRODUCED")
-    Set<Movie> producedMovies;
+    List<Movie> producedMovies;
 
     @Relationship("WROTE")
-    Set<Movie> writtenMovies;
+    List<Movie> writtenMovies;
     
 
     public Person(String name,Integer bornYear){
@@ -54,14 +56,14 @@ public class Person {
 
     public void follows(Person master){
         if (masters == null){
-            masters = new HashSet<>();
+            masters = new LinkedList<>();
         }
         masters.add(master);
     }
 
     public void actedIn(Movie movie,String[] roles){
         if ( actedIns == null){
-            actedIns = new HashSet<>();
+            actedIns = new LinkedList<>();
         }
         ActedIn actedIn = new ActedIn(movie,roles);
         actedIns.add(actedIn);
@@ -69,7 +71,7 @@ public class Person {
     
     public void reviewed(Movie movie,String summary, Integer rating){
         if ( revieweds == null){
-            revieweds = new HashSet<>();
+            revieweds = new LinkedList<>();
         }
         Reviewed reviewed = new Reviewed(movie, summary, rating);
         revieweds.add(reviewed);
@@ -77,21 +79,21 @@ public class Person {
 
     public void directed(Movie movie){
         if ( directedMovies == null){
-            directedMovies = new HashSet<>();
+            directedMovies = new LinkedList<>();
         }
         directedMovies.add(movie);
     }
 
     public void produced(Movie movie){
         if ( producedMovies == null){
-            producedMovies = new HashSet<>();
+            producedMovies = new LinkedList<>();
         }
         producedMovies.add(movie);
     }
 
     public void wrote(Movie movie){
         if ( writtenMovies == null){
-            writtenMovies = new HashSet<>();
+            writtenMovies = new LinkedList<>();
         }
         writtenMovies.add(movie);
     }
@@ -125,9 +127,81 @@ public class Person {
 
         return result;
     }
+
+    public boolean deleteActedIn(Movie movie){
+        for(ActedIn actedIn : actedIns){
+           if(actedIn.getMovie().getTitle().equals(movie.getTitle())){
+            
+                actedIns.remove(actedIn);
+                if(actedIns.contains(actedIn)){
+                    return false;
+                }else{
+                    return true; 
+                }
+                               
+           }
+        }
+        return false;
+
+    }
+
+    public boolean deleteReviewed(Movie movie){
+        for(Reviewed reviewed : revieweds){
+           if(reviewed.getMovie().getTitle().equals(movie.getTitle())){
+                revieweds.remove(reviewed);
+                return true;
+           }
+        }
+        return false;
+
+    }
+
+    public boolean deleteFollows(Person person){
+        for(Person master : masters){
+            if(master.getName().equals(person.getName())){
+                masters.remove(person);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteDirected(Movie movie){
+        for(Movie directedMovie : directedMovies){
+            if(directedMovie.getTitle().equals(movie.getTitle())){
+                directedMovies.remove(movie);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteProduced(Movie movie){
+        for(Movie producedMovie : producedMovies){
+            if(producedMovie.getTitle().equals(movie.getTitle())){
+                directedMovies.remove(movie);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteWrote(Movie movie){
+        for(Movie writtenMovie : writtenMovies){
+            if(writtenMovie.getTitle().equals(movie.getTitle())){
+                writtenMovies.remove(movie);
+                return true;
+            }
+        }
+        return false;
+    }
     
     public String infomation(){
         return "name: "+ this.name + ", born: "+ this.bornYear;
+    }
+
+    public List<ActedIn> getActedIns(){
+        return actedIns;
     }
     
 }

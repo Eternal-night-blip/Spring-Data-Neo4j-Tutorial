@@ -2,13 +2,18 @@ package com.ilvo.neo4jdemo;
 
 import java.util.List;
 
+import org.jline.utils.AttributedString;
+import org.jline.utils.AttributedStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
+
+import org.springframework.shell.jline.PromptProvider;
 
 import com.ilvo.neo4jdemo.dto.ActedInProperty;
 import com.ilvo.neo4jdemo.dto.ReviewedProperties;
@@ -23,7 +28,15 @@ public class Neo4jdemoApplication {
 
 	private final static Logger log = LoggerFactory.getLogger(Neo4jdemoApplication.class);
 	public static void main(String[] args){
-		SpringApplication.run(Neo4jdemoApplication.class, args);
+		SpringApplication application = new SpringApplication(Neo4jdemoApplication.class);
+		application.setBannerMode(Mode.OFF);
+		application.run(args);
+		// SpringApplication.run(Neo4jdemoApplication.class, args);
+	}
+    
+    @Bean
+	public PromptProvider promptProvider() {
+		return () -> new AttributedString("shell:>", AttributedStyle.DEFAULT.foreground(AttributedStyle.CYAN));
 	}
 
 	@Bean
@@ -160,6 +173,10 @@ public class Neo4jdemoApplication {
 			for(int i=0;i< length;i++){
 				log.info(roles[i]);
 			}
+
+            follower.deleteActedIn(movie1);
+			personRepository.save(follower); //  also failed,see also 
+
 			
 			List<Movie> reviewedMovies = movieRepository.findReviewedMovies(follower.getName());
 			log.info("Moives which follower reviewed :");

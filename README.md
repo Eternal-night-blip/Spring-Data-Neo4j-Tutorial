@@ -14,9 +14,16 @@ Spring Data Neo4j（7.0.0） 由io.spring.dependency-management进行版本管�
 对Neo4j进行本地连接，你需要对设置application.properties文件（/src/main/resources目录下）进行设置，尤其注意密码要和自己的数据库密码一致。
 @import "/src/main/resources/application.properties" {line_end=3}
 
-## 启动命令
+## 命令
+#### 启动
 ```
-./gradlew bootRun
+./gradlew build
+java -jar ./build/libs/neo4jdemo-2.0.jar
+```
+#### 清除
+当你修改代码后需要清除之前编译好的文件，然后重新启动
+```
+./gradlew clean
 ```
 
 ## 如何学习Spring Data Neo4j
