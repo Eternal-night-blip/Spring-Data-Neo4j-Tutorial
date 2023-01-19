@@ -1,12 +1,13 @@
-# <center> Spring Data Neo4j MoiveDataset Tutorial 1.0
+# <center> Spring Data Neo4j MoiveDataset Tutorial 2.0
 ### <center> 李毅佳
 ### <center> Email: 2314181884@qq.com
 
-这是Neo4j 官方数据集Movie的Spring Data Neo4j项目1.0版本，使用Gradle（7.6）进行构建与管理
+这是Neo4j 官方数据集Movie的Spring Data Neo4j教程项目2.0版本，使用Gradle（7.6）进行构建与管理
 ## 本项目依赖配置：
 SpringBoot 3.0.1版本
 Java 17
-Spring Data Neo4j（7.0.0） 由io.spring.dependency-management进行版本管理
+Spring Data Neo4j（7.0.0）
+Spring Shell (3.0.0-RC1)
 
 采用Spring Data Neo4j框架，使用SpringBoot进行管理。
 这里对Neo4j数据库进行的映射框架是Spring Data Neo4j，而不是用Neo4j OGM框架。Spring Data Neo4j自从6.0+后就不再依赖Neo4j OGM，而是作为独立的OGM框架。
@@ -14,9 +15,16 @@ Spring Data Neo4j（7.0.0） 由io.spring.dependency-management进行版本管�
 对Neo4j进行本地连接，你需要对设置application.properties文件（/src/main/resources目录下）进行设置，尤其注意密码要和自己的数据库密码一致。
 @import "/src/main/resources/application.properties" {line_end=3}
 
-## 启动命令
+## 命令
+#### 启动
 ```
-./gradlew bootRun
+./gradlew build
+java -jar ./build/libs/neo4jdemo-2.0.jar
+```
+#### 清除
+当你修改代码后需要清除之前编译好的文件，然后重新启动
+```
+./gradlew clean
 ```
 
 ## 如何学习Spring Data Neo4j
@@ -46,7 +54,7 @@ Spring Data Neo4j（7.0.0） 由io.spring.dependency-management进行版本管�
 有两种办法，第一种是Person类里创建Movie类型的属性，并且标记为关系，用注解@Relationship，如下段代码所示
 @import "/src/main/java/com/ilvo/neo4jdemo/nodes/Person.java" {line_begin=34 line_end=36}
 注意了，这里好像没有说方向呀，实际上默认方向是OUTCOMING。在这个例子中也就是说代表了从Person指向Movie的关系DIRECTED
-注意哦，这里的实际类型是"Set<Movie>"，这是因为一个导演可以指导多部电影，Set是集合，"<  >"里放具体的类型。
+注意哦，这里的实际类型是 List&lt;Movie&gt;，这是因为一个导演可以指导多部电影，List是集合，"<  >"里放具体的类型。
 
 对于有属性的关系，我们需要单独定义这样的关系的类，比如ActedIn类
 @import "/src/main/java/com/ilvo/neo4jdemo/relationships/ActedIn.java" {line_begin=10 line_end=21}
@@ -77,13 +85,12 @@ https://docs.spring.io/spring-data/neo4j/docs/current/reference/html/#repository
 另外直接在实体类中进行操作也是可以的，比如在Person类添加FOLLOWS关系
 @import "/src/main/java/com/ilvo/neo4jdemo/nodes/Person.java" {line_begin=54 line_end=60}
 当然了，仅仅有这个是不够的，还得配合Repository才行，比如要用save方法进行保存，不然是无法将操作输入到Neo4j数据库中的。
-相关操作在Neo4jdemoApplication.java中，其实可以专门定义某个类来综合此操作，后续版本将实现命令行与网络请求两种方式。
-对应的Repositpry的操作是save。
-@import "/src/main/java/com/ilvo/neo4jdemo/Neo4jdemoApplication.java" {line_begin=112 line_end=117}
+2.0版本中相关操作在Commands.java中，对应的Repositpry的操作是save。
+@import "/src/main/java/com/ilvo/neo4jdemo/cli/Commands.java" {line_begin=115 line_end=126}
 
 比如在Person类查询与某部电影有关的ACTEDIN关系的属性
 @import "/src/main/java/com/ilvo/neo4jdemo/nodes/Person.java" {line_begin=98 line_end=112}
 注意这里的返回类型是ActedInProperty（在/src/main/java/ilvo/neo4jdemo/dto目录下），为什么不直接用ActedIn呢？
 因为只需要返回属性，而ActedIn里面不止有属性还有Movie、id。我们把像ActedInProperty这样用于传输数据的类叫做DTO(Data Transfer Object)。
-对应的Repository的操作是findByName与findActedInMovies
-@import "/src/main/java/com/ilvo/neo4jdemo/Neo4jdemoApplication.java" {line_begin=180 line_end=195}
+对应的Repository的操作是findByName与findByName,然后在Person类中调用getActedInProperty方法
+@import "/src/main/java/com/ilvo/neo4jdemo/cli/Commands.java" {line_begin=195 line_end=210}
