@@ -260,7 +260,7 @@ public class Commands {
     }
 
     @ShellMethod(value = "query movies which person directed, you should input person's name",group = "Advanced Query Commands")
-    public void queryDiectedMovies(String name){
+    public void queryDirectedMovies(String name){
 
 		List<Movie> directedMovies = movieRepository.findDirectedMovies(name);
 		System.out.println("Movies directed by "+name+" :");
