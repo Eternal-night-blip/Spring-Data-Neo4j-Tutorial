@@ -41,11 +41,11 @@ java -jar ./build/libs/neo4jdemo-2.0.jar
 
 #### 如何对Neo4j的数据模型与Java类进行映射呢？
 以Person类为例
-@import "/src/main/java/com/ilvo/neo4jdemo/nodes/Person.java" {line_begin=16 line_end=42}
+@import "/src/main/java/com/ilvo/neo4jdemo/nodes/Person.java" {line_begin=17 line_end=46}
 
 ###### 首先这个类如何识别标签呢？
 用注解@Node，注意默认是类名当做标签名，为了简单起见，使用@Node("Person")，注解@Node括号里的是标签名，防止标签与类名不一致的情况。
-每个节点与关系都需要属性作为唯一标识符，用注解@Id进行标记。Neo4j数据库自己生成的Id（并不是作为属性），但是Movie数据集中没有定义Id属性，所以我们把Person的name属性作为唯一标识符。这样做当然有缺陷，因为可能出现重名的情况。
+每个节点与关系都需要属性作为唯一标识符，用注解@Id进行标记。Neo4j数据库自己生成的内置Id（并不是作为属性），但是Movie数据集中没有定义Id属性，所以我们把Person的id属性作为唯一标识符，而且不手动操作他，而是Neo4j自己生成它，作为内置id。
 其他属性用@Property进行标记，同样的括号里要写上对应的属性名。当然了你可以不用@Property标记属性，只要类中的属性名与Neo4j数据库中的该节点的属性名一致即可，但是建议使用@Property方便阅读，且不容易犯错。
 
 ###### 如何识别关系呢？
