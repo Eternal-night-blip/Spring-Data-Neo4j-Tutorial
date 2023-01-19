@@ -8,7 +8,7 @@ import org.springframework.data.neo4j.repository.query.Query;
 import com.ilvo.neo4jdemo.nodes.Movie;
 
 
-public interface MovieRepository extends Neo4jRepository<Movie,String>{
+public interface MovieRepository extends Neo4jRepository<Movie,Long>{
 
     public Movie findByTitle(String title);
     

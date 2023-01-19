@@ -7,7 +7,7 @@ import org.springframework.data.neo4j.repository.query.Query;
 
 import com.ilvo.neo4jdemo.nodes.Person;
 
-public interface PersonRepository extends Neo4jRepository<Person,String> {
+public interface PersonRepository extends Neo4jRepository<Person,Long> {
 
     public Person findByName(String name);
 

@@ -3,6 +3,7 @@ package com.ilvo.neo4jdemo.nodes;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
@@ -17,7 +18,10 @@ import com.ilvo.neo4jdemo.relationships.Reviewed;
 @Node("Person")
 public class Person {
 
-    @Id
+    @Id@GeneratedValue
+    private Long id;
+
+    @Property("name")
     private String name;
     
     @Property("born")
@@ -43,6 +47,7 @@ public class Person {
     
 
     public Person(String name,Integer bornYear){
+        this.id = null;
         this.name = name;
         this.bornYear = bornYear;
     }
@@ -127,7 +132,7 @@ public class Person {
     }
     
     public String infomation(){
-        return "name: "+ this.name + ", born: "+ this.bornYear;
+        return "name: "+ name + ", born: "+ bornYear +",id: " + id;
     }
 
 }
