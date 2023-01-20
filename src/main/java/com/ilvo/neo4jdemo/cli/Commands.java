@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ilvo.neo4jdemo.dto.ActedInProperty;
 import com.ilvo.neo4jdemo.dto.ReviewedProperties;
@@ -24,7 +25,8 @@ public class Commands {
         this.personRepository = personRepository;
         this.movieRepository = movieRepository; 
     }
-
+    
+    @Transactional
     @ShellMethod(value = "add a person node,you should input name then born year",group = "Node Basic Commands")
     public void addPerson(String name, Integer bornYear){
 
@@ -35,7 +37,8 @@ public class Commands {
         System.out.println("you add the person :\n"+person.infomation());
 
     }
-
+    
+    @Transactional
     @ShellMethod(value = "delete a person node,you should input name",group = "Node Basic Commands")
     public void deletePerson(String name){
 
@@ -46,6 +49,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "add a movie node,you should input title, tagline then released year",group = "Node Basic Commands")
     public void addMovie(String title, String tagline, Integer releasedYear){
 
@@ -57,6 +61,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "delete a movie node,you should input title",group = "Node Basic Commands")
     public void deleteMovie(String title){
 
@@ -67,6 +72,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "add a ACTED_In relationship, you should input person's name, movie's title then the roles",group = "Relationship Basic Commands")
     public void actedIn(String name, String title, String[] roles){
 
@@ -80,6 +86,7 @@ public class Commands {
         
     }
 
+    @Transactional
     @ShellMethod(value = "delete a ACTED_In relationship, you should input person's name, movie's title",group = "Relationship Basic Commands")
     public void deleteActedIn(String name, String title){
         
@@ -92,6 +99,7 @@ public class Commands {
         
     }
 
+    @Transactional
     @ShellMethod(value = "add a REVIEWED relationship, you should input person's name, movie's title, summary and rating",group = "Relationship Basic Commands")
     public void reviewed(String name, String title, String summaty, Integer rating){
 
@@ -104,6 +112,7 @@ public class Commands {
     
     }
 
+    @Transactional
     @ShellMethod(value = "delete a REVIEWED relationship, you should input person's name, movie's title",group = "Relationship Basic Commands")
     public void deleteReviewed(String name, String title){
        
@@ -116,6 +125,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "add a FOLLOWS relationship, you should input follower's name, master's name",group = "Relationship Basic Commands")
     public void follows(String name_follower, String name_master){
 
@@ -128,6 +138,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "delete a FOLLOWS relationship, you should input follower's name, master's name",group = "Relationship Basic Commands")
     public void deleteFollows(String name_follower, String name_master){
         
@@ -140,6 +151,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "add a DIRECTED relationship, you should input person's name, movie's title",group = "Relationship Basic Commands")
     public void directed(String name, String title){
 
@@ -152,6 +164,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "delete a DIRECTED relationship, you should input person's name, movie's title",group = "Relationship Basic Commands")
     public void deleteDirected(String name, String title){
         
@@ -164,6 +177,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "add a PRODUCED relationship, you should input person's name , movie's title",group = "Relationship Basic Commands")
     public void produced(String name, String title){
 
@@ -176,6 +190,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "delete a PRODUCED relationship, you should input person's name , movie's title",group = "Relationship Basic Commands")
     public void deleteProduced(String name, String title){
          
@@ -188,6 +203,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "add a WROTE relationship, you should input person's name , movie's title",group = "Relationship Basic Commands")
     public void wrote(String name, String title){
 
@@ -200,6 +216,7 @@ public class Commands {
 
     }
 
+    @Transactional
     @ShellMethod(value = "delete a WROTE relationship, you should input person's name, movie's title",group = "Relationship Basic Commands")
     public void deleteWrote(String name, String title){
         
