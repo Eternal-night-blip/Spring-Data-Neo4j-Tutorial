@@ -76,19 +76,18 @@ public class Commands {
         person.actedIn(movie, roles);
         personRepository.save(person);
 
-        System.out.println("you add an ACTED_IN relationship between "+person.getName()+" and "+movie.getTitle()+",roles is : ");
-        roles = person.getActedInProperty(movie).getRoles();
-        int length = roles.length;
-			for(int i=0;i< length;i++){
-				System.out.println(roles[i]);
-			}
+        System.out.println("you add an ACTED_IN relationship between "+name+" and "+title);
         
     }
 
     @ShellMethod(value = "delete a ACTED_In relationship, you should input person's name, movie's title",group = "Relationship Basic Commands")
     public void deleteActedIn(String name, String title){
         
-        personRepository.deleteActedInRelationship(name, title);
+        Person person = personRepository.findByName(name);
+        Movie movie = movieRepository.findByTitle(title);
+
+        person.deleteActedIn(movie);
+        personRepository.save(person);
         System.out.println("you delete an ACTED_IN relationship between "+name+" and "+title);
         
     }
@@ -101,14 +100,18 @@ public class Commands {
 
         person.reviewed(movie, summaty,rating);
         personRepository.save(person);
-        System.out.println("you add an REVIEWED relationship between "+person.getName()+" and "+movie.getTitle()+", is "+person.getReviewedProperties(movie));
+        System.out.println("you add an REVIEWED relationship between "+name+" and "+title);
     
     }
 
     @ShellMethod(value = "delete a REVIEWED relationship, you should input person's name, movie's title",group = "Relationship Basic Commands")
     public void deleteReviewed(String name, String title){
+       
+        Person person = personRepository.findByName(name);
+        Movie movie = movieRepository.findByTitle(title);
 
-        personRepository.deleteReviewedRelationship(name,title);
+        person.deleteReviewed(movie);
+        personRepository.save(person);
         System.out.println("you delete an REVIEWED relationship between "+name+" and "+title);
 
     }
@@ -121,14 +124,18 @@ public class Commands {
 
         follower.follows(master);
         personRepository.save(follower);
-        System.out.println("you add an FOLLOWS relationship between "+follower.getName()+" and "+master.getName());
+        System.out.println("you add an FOLLOWS relationship between "+name_follower+" and "+name_master);
 
     }
 
     @ShellMethod(value = "delete a FOLLOWS relationship, you should input follower's name, master's name",group = "Relationship Basic Commands")
     public void deleteFollows(String name_follower, String name_master){
-
-        personRepository.deleteFollowsRelationship(name_follower,name_master);
+        
+        Person follower = personRepository.findByName(name_follower);
+        Person master = personRepository.findByName(name_master);
+        
+        follower.deleteFollows(master);
+        personRepository.save(follower);
         System.out.println("you delete an FOLLOWS relationship between "+name_follower+" and "+name_master);
 
     }
@@ -141,14 +148,18 @@ public class Commands {
 
         person.directed(movie);
         personRepository.save(person);
-        System.out.println("you add an DIRECTED relationship between "+person.getName()+" and "+movie.getTitle()+", is "+person.getReviewedProperties(movie));
+        System.out.println("you add an DIRECTED relationship between "+name+" and "+title);
 
     }
 
     @ShellMethod(value = "delete a DIRECTED relationship, you should input person's name, movie's title",group = "Relationship Basic Commands")
     public void deleteDirected(String name, String title){
-
-        personRepository.deleteDirectedRelationship(name,title);
+        
+        Person person = personRepository.findByName(name);
+        Movie movie = movieRepository.findByTitle(title);
+        
+        person.deleteDirected(movie);
+        personRepository.save(person);
         System.out.println("you delete an DIRECTED relationship between "+name+" and "+title);
 
     }
@@ -161,14 +172,18 @@ public class Commands {
 
         person.produced(movie);
         personRepository.save(person);
-        System.out.println("you add an PRODUCED relationship between "+person.getName()+" and "+movie.getTitle()+", is "+person.getReviewedProperties(movie));
+        System.out.println("you add an PRODUCED relationship between "+name+" and "+title);
 
     }
 
     @ShellMethod(value = "delete a PRODUCED relationship, you should input person's name , movie's title",group = "Relationship Basic Commands")
     public void deleteProduced(String name, String title){
-
-        personRepository.deleteProducedRelationship(name,title);
+         
+        Person person = personRepository.findByName(name);
+        Movie movie = movieRepository.findByTitle(title);
+        
+        person.deleteProduced(movie);
+        personRepository.save(person);
         System.out.println("you delete an PRODUCED relationship between "+name+" and "+title);
 
     }
@@ -181,14 +196,18 @@ public class Commands {
 
         person.wrote(movie);
         personRepository.save(person);
-        System.out.println("you add an WROTE relationship between "+person.getName()+" and "+movie.getTitle()+", is "+person.getReviewedProperties(movie));
+        System.out.println("you add an WROTE relationship between "+name+" and "+ title);
 
     }
 
     @ShellMethod(value = "delete a WROTE relationship, you should input person's name, movie's title",group = "Relationship Basic Commands")
     public void deleteWrote(String name, String title){
-
-        personRepository.deleteWroteRelationship(name,title);
+        
+        Person person = personRepository.findByName(name);
+        Movie movie = movieRepository.findByTitle(title);
+        
+        person.deleteWrote(movie);
+        personRepository.save(person);
         System.out.println("you delete an WROTE relationship between "+name+" and "+title);
 
     }
@@ -294,5 +313,5 @@ public class Commands {
 		allRelativePeople.forEach(person->System.out.println(person.infomation()));
         
     }
-    
+
 }

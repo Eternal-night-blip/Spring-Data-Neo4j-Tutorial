@@ -19,23 +19,5 @@ public interface PersonRepository extends Neo4jRepository<Person,Long> {
 
     @Query("MATCH (persons:Person) -[r]-> (movie:Movie) WHERE movie.title = $movie_title RETURN persons")
     public List<Person> findAllRelativePeopleOfMovie(String movie_title);
-    
-    @Query("MATCH (:Person{name:$name}) -[r:ACTED_IN]-> (:Movie{title:$title}) DELETE r")
-    public void deleteActedInRelationship(String name, String title);
-
-    @Query("MATCH (:Person{name:$name}) -[r:REVIEWED]-> (:Movie{title:$title}) DELETE r")
-    public void deleteReviewedRelationship(String name, String title);
-
-    @Query("MATCH (:Person{name:$name}) -[r:FOLLOWS]-> (:Movie{title:$title}) DELETE r")
-    public void deleteFollowsRelationship(String name_follower, String name_master);
-    
-    @Query("MATCH (:Person{name:$name}) -[r:DIRECTED]-> (:Movie{title:$title}) DELETE r")
-    public void deleteDirectedRelationship(String name, String title);
-   
-    @Query("MATCH (:Person{name:$name}) -[r:PRODUCED]-> (:Movie{title:$title}) DELETE r")
-    public void deleteProducedRelationship(String name, String title);
-    
-    @Query("MATCH (:Person{name:$name}) -[r:WROTE]-> (:Movie{title:$title}) DELETE r")
-    public void deleteWroteRelationship(String name, String title);
 
 }

@@ -101,6 +101,66 @@ public class Person {
         writtenMovies.add(movie);
     }
 
+    public boolean deleteActedIn(Movie movie){
+        for(ActedIn acted : actedIns){
+            if(acted.getMovie().getTitle().equals(movie.getTitle())){
+                actedIns.remove(acted);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteReviewed(Movie movie){
+        for(Reviewed reviewed : revieweds){
+            if(reviewed.getMovie().getTitle().equals(movie.getTitle())){
+                revieweds.remove(reviewed);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteFollows(Person person){
+        for(Person master : masters){
+            if(master.getName().equals(person.getName())){
+                masters.remove(master);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteDirected(Movie movie){
+        for(Movie directedMovie : directedMovies){
+            if(directedMovie.getTitle().equals(movie.getTitle())){
+                directedMovies.remove(directedMovie);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteProduced(Movie movie){
+        for(Movie producedMovie : producedMovies){
+            if(producedMovie.getTitle().equals(movie.getTitle())){
+                producedMovies.remove(producedMovie);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteWrote(Movie movie){
+        for(Movie writtenMovie : writtenMovies){
+            if(writtenMovie.getTitle().equals(movie.getTitle())){
+                writtenMovies.remove(writtenMovie);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ActedInProperty getActedInProperty(Movie movie){
 
         ActedInProperty result = null;
