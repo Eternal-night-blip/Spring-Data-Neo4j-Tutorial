@@ -3,7 +3,7 @@ package com.ilvo.neo4jdemo.cli;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jline.terminal.Terminal;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +17,13 @@ import com.ilvo.neo4jdemo.repository.PersonRepository;
 
 @ShellComponent
 public class Commands {
-
+    
+    final private Terminal terminal;
     final private PersonRepository personRepository;
     final private MovieRepository movieRepository;
     
-    public Commands(@Autowired PersonRepository personRepository,@Autowired MovieRepository movieRepository){
+    public Commands(Terminal terminal,PersonRepository personRepository,MovieRepository movieRepository){
+        this.terminal = terminal;
         this.personRepository = personRepository;
         this.movieRepository = movieRepository; 
     }
@@ -34,7 +36,7 @@ public class Commands {
         personRepository.save(person);
 
         person = personRepository.findByName(person.getName());
-        System.out.println("you add the person :\n"+person.infomation());
+        terminal.writer().println("you add the person :\n"+person.infomation());
 
     }
     
@@ -45,7 +47,7 @@ public class Commands {
         Person person = personRepository.findByName(name);
         
         personRepository.delete(person);
-        System.out.println("you delete the person :\n"+person.infomation());
+        terminal.writer().println("you delete the person :\n"+person.infomation());
 
     }
 
@@ -53,11 +55,12 @@ public class Commands {
     @ShellMethod(value = "add a movie node,you should input title, tagline then released year",group = "Node Basic Commands")
     public void addMovie(String title, String tagline, Integer releasedYear){
 
+        //Movie movie = new Movie(title,tagline,releasedYear);
         Movie movie = new Movie(title,tagline,releasedYear);
         movieRepository.save(movie);
 
         movie = movieRepository.findByTitle(movie.getTitle());
-        System.out.println("you add the movie :\n"+ movie.infomation());
+        terminal.writer().println("you add the movie :\n"+ movie.infomation());
 
     }
 
@@ -68,7 +71,7 @@ public class Commands {
         Movie movie = movieRepository.findByTitle(title);
 
         movieRepository.delete(movie);
-        System.out.println("you delete the movie :\n"+movie.infomation());
+        terminal.writer().println("you delete the movie :\n"+movie.infomation());
 
     }
 
@@ -82,7 +85,7 @@ public class Commands {
         person.actedIn(movie, roles);
         personRepository.save(person);
 
-        System.out.println("you add an ACTED_IN relationship between "+name+" and "+title);
+        terminal.writer().println("you add an ACTED_IN relationship between "+name+" and "+title);
         
     }
 
@@ -95,7 +98,7 @@ public class Commands {
 
         person.deleteActedIn(movie);
         personRepository.save(person);
-        System.out.println("you delete an ACTED_IN relationship between "+name+" and "+title);
+        terminal.writer().println("you delete an ACTED_IN relationship between "+name+" and "+title);
         
     }
 
@@ -108,10 +111,10 @@ public class Commands {
 
         person.reviewed(movie, summaty,rating);
         personRepository.save(person);
-        System.out.println("you add an REVIEWED relationship between "+name+" and "+title);
+        terminal.writer().println("you add an REVIEWED relationship between "+name+" and "+title);
     
     }
-
+    
     @Transactional
     @ShellMethod(value = "delete a REVIEWED relationship, you should input person's name, movie's title",group = "Relationship Basic Commands")
     public void deleteReviewed(String name, String title){
@@ -121,7 +124,7 @@ public class Commands {
 
         person.deleteReviewed(movie);
         personRepository.save(person);
-        System.out.println("you delete an REVIEWED relationship between "+name+" and "+title);
+        terminal.writer().println("you delete an REVIEWED relationship between "+name+" and "+title);
 
     }
 
@@ -134,7 +137,7 @@ public class Commands {
 
         follower.follows(master);
         personRepository.save(follower);
-        System.out.println("you add an FOLLOWS relationship between "+name_follower+" and "+name_master);
+        terminal.writer().println("you add an FOLLOWS relationship between "+name_follower+" and "+name_master);
 
     }
 
@@ -147,7 +150,7 @@ public class Commands {
         
         follower.deleteFollows(master);
         personRepository.save(follower);
-        System.out.println("you delete an FOLLOWS relationship between "+name_follower+" and "+name_master);
+        terminal.writer().println("you delete an FOLLOWS relationship between "+name_follower+" and "+name_master);
 
     }
 
@@ -160,7 +163,7 @@ public class Commands {
 
         person.directed(movie);
         personRepository.save(person);
-        System.out.println("you add an DIRECTED relationship between "+name+" and "+title);
+        terminal.writer().println("you add an DIRECTED relationship between "+name+" and "+title);
 
     }
 
@@ -173,7 +176,7 @@ public class Commands {
         
         person.deleteDirected(movie);
         personRepository.save(person);
-        System.out.println("you delete an DIRECTED relationship between "+name+" and "+title);
+        terminal.writer().println("you delete an DIRECTED relationship between "+name+" and "+title);
 
     }
 
@@ -186,7 +189,7 @@ public class Commands {
 
         person.produced(movie);
         personRepository.save(person);
-        System.out.println("you add an PRODUCED relationship between "+name+" and "+title);
+        terminal.writer().println("you add an PRODUCED relationship between "+name+" and "+title);
 
     }
 
@@ -199,7 +202,7 @@ public class Commands {
         
         person.deleteProduced(movie);
         personRepository.save(person);
-        System.out.println("you delete an PRODUCED relationship between "+name+" and "+title);
+        terminal.writer().println("you delete an PRODUCED relationship between "+name+" and "+title);
 
     }
 
@@ -212,7 +215,7 @@ public class Commands {
 
         person.wrote(movie);
         personRepository.save(person);
-        System.out.println("you add an WROTE relationship between "+name+" and "+ title);
+        terminal.writer().println("you add an WROTE relationship between "+name+" and "+ title);
 
     }
 
@@ -225,7 +228,7 @@ public class Commands {
         
         person.deleteWrote(movie);
         personRepository.save(person);
-        System.out.println("you delete an WROTE relationship between "+name+" and "+title);
+        terminal.writer().println("you delete an WROTE relationship between "+name+" and "+title);
 
     }
 
@@ -236,11 +239,11 @@ public class Commands {
         Movie movie = movieRepository.findByTitle(title);
 
         ActedInProperty actedInProperty = person.getActedInProperty(movie);
-        System.out.println("the roles of ActedIn relationship between "+name+" and "+title+" :");
+        terminal.writer().println("the roles of ActedIn relationship between "+name+" and "+title+" :");
 			String[] roles = actedInProperty.getRoles();
 			int length = roles.length;
 			for(int i=0;i< length;i++){
-				System.out.println(roles[i]);
+				terminal.writer().println(roles[i]);
 			}
 
     }
@@ -252,10 +255,10 @@ public class Commands {
         Movie movie = movieRepository.findByTitle(title);
 
         ReviewedProperties reviewedProperties = person.getReviewedProperties(movie);
-        System.out.println("the summary of Reviewed relationship between "+name+" and "+title+" :");
-		System.out.println(reviewedProperties.getSummary());
-		System.out.println("the rating of Reviewed relationship between "+name+" and "+title+" :");
-		System.out.println(reviewedProperties.getRating().toString());
+        terminal.writer().println("the summary of Reviewed relationship between "+name+" and "+title+" :");
+		terminal.writer().println(reviewedProperties.getSummary());
+		terminal.writer().println("the rating of Reviewed relationship between "+name+" and "+title+" :");
+		terminal.writer().println(reviewedProperties.getRating().toString());
 
     }
 
@@ -263,8 +266,8 @@ public class Commands {
     public void queryActedInMovies(String name){
 
 		List<Movie> actedInMovies = movieRepository.findActedInMovies(name);
-		System.out.println("Movies acted by "+name+" :");
-		actedInMovies.forEach(movie->System.out.println(movie.infomation()));
+		terminal.writer().println("Movies acted by "+name+" :");
+		actedInMovies.forEach(movie->terminal.writer().println(movie.infomation()));
 
     }
 
@@ -272,8 +275,8 @@ public class Commands {
     public void queryReviewedMovies(String name){
 
 		List<Movie> reviewedMovies = movieRepository.findReviewedMovies(name);
-		System.out.println("Movies reviewed by "+name+" :");
-		reviewedMovies.forEach(movie->System.out.println(movie.infomation()));
+		terminal.writer().println("Movies reviewed by "+name+" :");
+		reviewedMovies.forEach(movie->terminal.writer().println(movie.infomation()));
 
     }
 
@@ -281,8 +284,8 @@ public class Commands {
     public void queryMasters(String name){
 
 		List<Person> masters = personRepository.findMasters(name);
-		System.out.println("Masters followed by "+name+" :");
-		masters.forEach(person->System.out.println(person.infomation()));
+		terminal.writer().println("Masters followed by "+name+" :");
+		masters.forEach(person->terminal.writer().println(person.infomation()));
 
     }
 
@@ -290,8 +293,8 @@ public class Commands {
     public void queryFollowers(String name){
 
         List<Person> followers = personRepository.findFollowers(name);
-		System.out.println("Followers of "+name+" :");
-		followers.forEach(person->System.out.println(person.infomation()));
+		terminal.writer().println("Followers of "+name+" :");
+		followers.forEach(person->terminal.writer().println(person.infomation()));
 
     }
 
@@ -299,8 +302,8 @@ public class Commands {
     public void queryDirectedMovies(String name){
 
 		List<Movie> directedMovies = movieRepository.findDirectedMovies(name);
-		System.out.println("Movies directed by "+name+" :");
-		directedMovies.forEach(movie->System.out.println(movie.infomation()));
+		terminal.writer().println("Movies directed by "+name+" :");
+		directedMovies.forEach(movie->terminal.writer().println(movie.infomation()));
 
     }
 
@@ -308,8 +311,8 @@ public class Commands {
     public void queryProducedMovies(String name){
 
 		List<Movie> producedMovies = movieRepository.findProducedMovies(name);
-		System.out.println("Movies produced by "+name+" :");
-		producedMovies.forEach(movie->System.out.println(movie.infomation()));
+		terminal.writer().println("Movies produced by "+name+" :");
+		producedMovies.forEach(movie->terminal.writer().println(movie.infomation()));
 
     }
 
@@ -317,8 +320,8 @@ public class Commands {
     public void queryWrittenMovies(String name){
 
 		List<Movie> writtenMovies = movieRepository.findWrittenMovies(name);
-		System.out.println("Movies written by "+name+" :");
-		writtenMovies.forEach(movie->System.out.println(movie.infomation()));
+		terminal.writer().println("Movies written by "+name+" :");
+		writtenMovies.forEach(movie->terminal.writer().println(movie.infomation()));
 
     }
 
@@ -326,8 +329,8 @@ public class Commands {
     public void queryRelativePeopleOfMovie(String title){
 
         List<Person> allRelativePeople = personRepository.findAllRelativePeopleOfMovie(title);
-		System.out.println("All relative people of the movie The Greeb Mile :");
-		allRelativePeople.forEach(person->System.out.println(person.infomation()));
+		terminal.writer().println("All relative people of the movie The Greeb Mile :");
+		allRelativePeople.forEach(person->terminal.writer().println(person.infomation()));
         
     }
 
