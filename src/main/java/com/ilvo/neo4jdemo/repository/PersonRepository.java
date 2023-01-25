@@ -17,7 +17,21 @@ public interface PersonRepository extends Neo4jRepository<Person,Long> {
     @Query("MATCH (follower:Person) -[:FOLLOWS]-> (masters:Person) WHERE follower.name = $follower_name RETURN masters")
     public List<Person> findMasters(String follower_name);
 
-    @Query("MATCH (persons:Person) -[r]-> (movie:Movie) WHERE movie.title = $movie_title RETURN persons")
+    @Query("MATCH (persons:Person) -[]-> (movie:Movie) WHERE movie.title = $movie_title RETURN persons")
     public List<Person> findAllRelativePeopleOfMovie(String movie_title);
+    
+    @Query("MATCH (directors:Person) -[:DIRECTED]-> (movie:Movie) WHERE movie.title = $movie_title RETURN directors")
+    public List<Person> findDirectorsOfMovie(String movie_title);
 
-}
+    @Query("MATCH (directors:Person) -[:ACTED_IN]-> (movie:Movie) WHERE movie.title = $movie_title RETURN directors")
+    public List<Person> findActorsOfMovie(String movie_title);
+
+    @Query("MATCH (directors:Person) -[:WROTE]-> (movie:Movie) WHERE movie.title = $movie_title RETURN directors")
+    public List<Person> findScreenWritersOfMovie(String movie_title);
+
+    @Query("MATCH (directors:Person) -[:PRODUCED]-> (movie:Movie) WHERE movie.title = $movie_title RETURN directors")
+    public List<Person> findProducersOfMovie(String movie_title);
+
+    @Query("MATCH (directors:Person) -[:REVIEWED]-> (movie:Movie) WHERE movie.title = $movie_title RETURN directors")
+    public List<Person> findReviewersOfMovie(String movie_title);
+}   
