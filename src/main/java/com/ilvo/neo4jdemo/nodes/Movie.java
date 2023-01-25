@@ -20,17 +20,26 @@ public class Movie {
     @Property("released")
     private Integer releasedYear;
 
-    public Movie(String title,String tagline,Integer releasedYear){
+    public Movie(String title, String tagline, Integer releasedYear){
         this.id = null;
         this.title = title;
         this.tagline = tagline;
         this.releasedYear = releasedYear;
+
     }
 
     public String getTitle(){
         return title;
     }
 
+    public String getTagLine(){
+        return tagline;
+    }
+
+    public Integer getReleasedYear(){
+        return releasedYear;
+    }
+    
     public String infomation(){
         return "title: " + title + ", tagline: " + tagline + ", released: "+ releasedYear+",id: "+id; 
     }
