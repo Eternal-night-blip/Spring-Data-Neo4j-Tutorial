@@ -17,21 +17,26 @@ public class TransferUitlTest {
     @Test
     public void should_work_for_persons_to_names(){
         List<Person> people = new ArrayList<>();
-        people.add(new Person("foo",2002));
-        people.add(new Person("bar",2003));
+        Person p1 = new Person("foo",2002);
+        Person p2 = new Person("bar",2003);
+        people.add(p1);
+        people.add(p2);
 
         List<Name> names= new ArrayList<>();
-        names.add(Name.of("foo"));
-        names.add(Name.of("bar"));
+        Name n1 = Name.of("foo");
+        Name n2 = Name.of("bar");
+        names.add(n1);
+        names.add(n2);
 
         List<Name> names_checked = TransferUtil.personsToNames(people);
            
-        assertThat(EquivalentUtil.doesEquivalent(names_checked, names));
+        assertThat(EquivalentUtil.doesEquivalent(names_checked, names)).isTrue();
         
-        names.remove(Name.of("bar"));
-        names.add(Name.of("bae"));
+        names.remove(n2);
+        Name n3 = Name.of("bae");
+        names.add(n3);
 
-        assertThat(!EquivalentUtil.doesEquivalent(names_checked, names));
+        assertThat(EquivalentUtil.doesEquivalent(names_checked, names)).isFalse();
 
     }
 

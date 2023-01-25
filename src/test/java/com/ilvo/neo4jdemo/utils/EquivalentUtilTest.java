@@ -16,25 +16,31 @@ public class EquivalentUtilTest {
     public void should_work_in_does_equivalent(){
         
         List<Name> people_checked = new ArrayList<>();
-        people_checked.add(Name.of("Tom Hanks"));
-        people_checked.add(Name.of("Ron Howard"));
-        people_checked.add(Name.of("Ed Harris"));
-        people_checked.add(Name.of("Gary Sinise"));
-        people_checked.add(Name.of("Kevin Bacon"));
-        people_checked.add(Name.of("Bill Paxton"));
+        Name p1 = Name.of("Tom Hanks");
+        Name p2 = Name.of("Ron Howard");
+        Name p3 = Name.of("Ed Harris");
+        Name p4 = Name.of("Gary Sinise");
+        Name p5 = Name.of("Kevin Bacon");
+        Name p6 = Name.of("Bill Paxton");
+        people_checked.add(p1);
+        people_checked.add(p2);
+        people_checked.add(p3);
+        people_checked.add(p4);
+        people_checked.add(p5);
+        people_checked.add(p6);
         
         List<Name> people = new ArrayList<>();
-        people.add(Name.of("Gary Sinise"));
-        people.add(Name.of("Bill Paxton"));
-        people.add(Name.of("Ed Harris"));
-        people.add(Name.of("Tom Hanks"));
-        people.add(Name.of("Kevin Bacon"));
-        people.add(Name.of("Ron Howard"));
+        people.add(p4);
+        people.add(p6);
+        people.add(p3);
+        people.add(p1);
+        people.add(p5);
+        people.add(p2);
         
-        assertThat(EquivalentUtil.doesEquivalent(people, people_checked));
+        assertThat(EquivalentUtil.doesEquivalent(people, people_checked)).isTrue();
         
-        people.remove(Name.of("Ed Harris"));
-        assertThat(!(EquivalentUtil.doesEquivalent(people, people_checked)));
+        people.remove(p3);
+        assertThat(EquivalentUtil.doesEquivalent(people, people_checked)).isFalse();
     
     }
     
