@@ -85,11 +85,11 @@ public class MovieServiceTest {
     }
     
     @Test
-    public void shoud_delete_movie(){
+    public void should_delete_movie(){
 
         boolean does_delete_movie = movieService.deleteMovie(Title.of("The Devil's Advocate"));
-        assertThat(does_delete_movie);
-
+        assertThat(does_delete_movie).isTrue();
+    
     }
 
     @Test
@@ -98,6 +98,12 @@ public class MovieServiceTest {
         assertThatExceptionOfType(NullPointerException.class)
                 .isThrownBy(() -> movieService.deleteMovie(Title.of("null_movie_for_delete")));
 
+    }
+
+    @Test
+    public void should_does_delete_movie(){
+        boolean does_delete_movie = movieService.doesDeleteMovie(Title.of("The Devil's Advocate"));
+        assertThat(does_delete_movie).isFalse();
     }
 
     @Test
@@ -133,7 +139,7 @@ public class MovieServiceTest {
         List<Person> directors_checked = movieService.getDirectors(Title.of("Apollo 13"));
         
         List<Name> directors_names_checked = TransferUtil.personsToNames(directors_checked);
-        assertThat(EquivalentUtil.doesEquivalent(directors_names_checked,names)); 
+        assertThat(EquivalentUtil.doesEquivalent(directors_names_checked,names)).isTrue(); 
     }
 
     @Test
@@ -147,11 +153,15 @@ public class MovieServiceTest {
 
         List<Name> names = new ArrayList<>();
         names.add(Name.of("Tom Hanks"));
+        names.add(Name.of("Ed Harris"));
+        names.add(Name.of("Gary Sinise"));
+        names.add(Name.of("Kevin Bacon"));
+        names.add(Name.of("Bill Paxton"));
 
         List<Person> actors_checked = movieService.getActors(Title.of("Apollo 13"));
         
         List<Name> actors_names_checked = TransferUtil.personsToNames(actors_checked);
-        assertThat(EquivalentUtil.doesEquivalent(actors_names_checked,names));   
+        assertThat(EquivalentUtil.doesEquivalent(actors_names_checked,names)).isTrue();   
     }
 
     @Test
@@ -169,7 +179,7 @@ public class MovieServiceTest {
         List<Person> screenWriters_checked = movieService.getScreenWriters(Title.of("A Few Good Men"));
         
         List<Name> screenWriters_names_checked = TransferUtil.personsToNames(screenWriters_checked);
-        assertThat(EquivalentUtil.doesEquivalent(screenWriters_names_checked,names));   
+        assertThat(EquivalentUtil.doesEquivalent(screenWriters_names_checked,names)).isTrue();   
     }
 
     @Test
@@ -187,7 +197,7 @@ public class MovieServiceTest {
 
         List<Person> producers_checked = movieService.getProducers(Title.of("Ninja Assassin"));
         List<Name> producers_names_checked = TransferUtil.personsToNames(producers_checked);
-        assertThat(EquivalentUtil.doesEquivalent(producers_names_checked,names));   
+        assertThat(EquivalentUtil.doesEquivalent(producers_names_checked,names)).isTrue();   
     }
 
     @Test
@@ -205,7 +215,7 @@ public class MovieServiceTest {
 
         List<Person> reviewers_checked = movieService.getReviewers(Title.of("The Da Vinci Code"));
         List<Name> reviewers_names_checked = TransferUtil.personsToNames(reviewers_checked);
-        assertThat(EquivalentUtil.doesEquivalent(reviewers_names_checked,names));   
+        assertThat(EquivalentUtil.doesEquivalent(reviewers_names_checked,names)).isTrue();   
     }
 
     @Test

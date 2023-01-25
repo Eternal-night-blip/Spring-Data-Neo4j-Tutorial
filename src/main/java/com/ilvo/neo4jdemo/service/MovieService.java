@@ -62,12 +62,15 @@ public class MovieService implements MovieServiceInterface{
     }
 
     public boolean doesDeleteMovie(Title title){
-
+        
+        boolean delete = true;
+        boolean not_delete = false;
+        
         Movie movie = movieRepository.findByTitle(title.getTitle());
-        if (movie == null){
-            return false;
+        if (movie != null){
+            return not_delete;
         }
-        return true;
+        return delete;
     }
 
     @Override
