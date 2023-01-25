@@ -121,7 +121,7 @@ public class MovieServiceTest {
         
         List<Name> people_names_checked = TransferUtil.personsToNames(people); 
         
-        assertThat(EquivalentUtil.doesEquivalent(people_names_checked, names)); 
+        assertThat(EquivalentUtil.doesEquivalent(people_names_checked, names)).isTrue(); 
     }
 
     @Test
