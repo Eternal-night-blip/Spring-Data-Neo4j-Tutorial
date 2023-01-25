@@ -21,6 +21,7 @@ import com.ilvo.neo4jdemo.nodes.properties.ReleasedYear;
 import com.ilvo.neo4jdemo.nodes.properties.TagLine;
 import com.ilvo.neo4jdemo.nodes.properties.Title;
 import com.ilvo.neo4jdemo.utils.EquivalentUtil;
+import com.ilvo.neo4jdemo.utils.ExistException;
 import com.ilvo.neo4jdemo.utils.TransferUtil;
 import com.ilvo.neo4jdemo.utils.EmptyException;
 
@@ -34,17 +35,6 @@ public class MovieServiceTest {
         this.movieService = movieService;
     }
    
-    @Test
-    public void should_add_movie(){
-        
-        Movie movie = movieService.addMovie(Title.of("fooTitle"),TagLine.of("fooTagLine"),ReleasedYear.of(2002));
-        
-        assertThat(movie.getTitle()).isEqualTo("fooTitle");
-        assertThat(movie.getTagLine()).isEqualTo("fooTagLine");
-        assertThat(movie.getReleasedYear()).isEqualByComparingTo(2002);
-    
-    }
-
     @Test
     public void should_throw_exception_for_null_parameter_in_all_method(){
         
@@ -76,6 +66,24 @@ public class MovieServiceTest {
                 .isThrownBy(() -> movieService.getReviewers(null));        
     }
 
+    @Test
+    public void should_add_movie(){
+        
+        Movie movie = movieService.addMovie(Title.of("fooTitle"),TagLine.of("fooTagLine"),ReleasedYear.of(2002));
+        
+        assertThat(movie.getTitle()).isEqualTo("fooTitle");
+        assertThat(movie.getTagLine()).isEqualTo("fooTagLine");
+        assertThat(movie.getReleasedYear()).isEqualByComparingTo(2002);
+    
+    }
+    
+    @Test
+    public void should_throw_exception_for_exist_movie_in_add_movie(){
+        assertThatExceptionOfType(ExistException.class)
+                .isThrownBy(() -> movieService.addMovie(Title.of("The Da Vinci Code"),TagLine.of("Break The Codes"),ReleasedYear.of(2006)));
+        
+    }
+    
     @Test
     public void shoud_delete_movie(){
 

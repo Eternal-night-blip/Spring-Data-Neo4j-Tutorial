@@ -13,6 +13,7 @@ import com.ilvo.neo4jdemo.repository.MovieRepository;
 import com.ilvo.neo4jdemo.repository.PersonRepository;
 import com.ilvo.neo4jdemo.utils.EmptyException;
 import com.ilvo.neo4jdemo.utils.EmptyUtil;
+import com.ilvo.neo4jdemo.utils.ExistException;
 
 @Service
 public class MovieService implements MovieServiceInterface{
@@ -31,9 +32,15 @@ public class MovieService implements MovieServiceInterface{
         if (title == null || tagLine == null || releasedYear == null) {
             throw new IllegalArgumentException("Null or empty title/tagline/released year is not allowed");
         }
-
+        
+        Movie movie_exist = movieRepository.findByTitle(title.getTitle());
+        if (movie_exist != null){
+            throw new ExistException("the movie "+title+" has already exist");
+        }
+        
         final Movie new_movie = new Movie(title.getTitle(),tagLine.getTagLine(),releasedYear.getReleasedYear());
         return movieRepository.save(new_movie);
+        
     }
 
     @Override
