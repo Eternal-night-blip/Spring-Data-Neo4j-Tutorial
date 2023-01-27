@@ -4,36 +4,36 @@ import java.util.Calendar;
 
 public final class BornYear {
 
-    private final Integer bornYear;
+    private final Integer year;
 
-    private BornYear(final Integer bornYear){
-        this.bornYear = bornYear;
+    private BornYear(final Integer year){
+        this.year = year;
     }
 
-    public static BornYear of(final Integer bornYear){
+    public static BornYear of(final Integer year){
         // the director of the first movie Lunch Hour at the Lumiere Factory
-        if(bornYear == null){
+        if(year == null){
             throw new IllegalArgumentException("null year of birth is not allowed");
         }
         
         int born_year_of_Louis_Lumiere = 1864;
 
-        if(bornYear < born_year_of_Louis_Lumiere){
+        if(year < born_year_of_Louis_Lumiere){
             throw new IllegalArgumentException("the year of birth can't be less than "+born_year_of_Louis_Lumiere);
         }
         
         Calendar calendar  = Calendar.getInstance();
         int thisYear = calendar.get(Calendar.YEAR); 
         
-        if(bornYear>thisYear){
+        if(year>thisYear){
             throw new IllegalArgumentException("the year of birth can't exceed this year "+thisYear);
         }
 
-        return new BornYear(bornYear);
+        return new BornYear(year);
     }
 
-    public Integer getBornYear(){
-        return bornYear;
+    public Integer get(){
+        return year;
     }
     
 }

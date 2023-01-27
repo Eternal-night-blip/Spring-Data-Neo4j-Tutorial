@@ -2,8 +2,8 @@ package com.ilvo.neo4jdemo.dto;
 
 public class ReviewedProperties {
 
-    final private String summary;
-    final private Integer rating;
+    private final String summary;
+    private final Integer rating;
 
     public ReviewedProperties(String summary, Integer rating){
         this.summary = summary;

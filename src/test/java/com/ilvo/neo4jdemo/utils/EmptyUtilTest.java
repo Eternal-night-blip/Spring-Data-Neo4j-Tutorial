@@ -16,6 +16,7 @@ public class EmptyUtilTest {
         String str = null;
         assertThat(EmptyUtil.isEmpty(str)).isTrue();
         assertThat(EmptyUtil.isEmpty("")).isTrue();
+        assertThat(EmptyUtil.isEmpty("   ")).isTrue();
     }
 
     @Test
@@ -24,11 +25,15 @@ public class EmptyUtilTest {
         List<Integer> emptyList = null;
         assertThat(EmptyUtil.isEmpty(emptyList)).isTrue();
         
-        emptyList = new ArrayList<>() {};
-        assertThat(EmptyUtil.isEmpty(emptyList)).isTrue();
+        List<Integer> emptyIntegerList = new ArrayList<>() {};
+        assertThat(EmptyUtil.isEmpty(emptyIntegerList)).isTrue();
         
-        emptyList.add(1);
-        assertThat(EmptyUtil.isEmpty(emptyList)).isFalse();
+        emptyIntegerList.add(1);
+        assertThat(EmptyUtil.isEmpty(emptyIntegerList)).isFalse();
+
+        List<String> stringList = new ArrayList<>();
+        stringList.add("");
+        assertThat(EmptyUtil.isEmpty(stringList)).isFalse();
     }
     
 }

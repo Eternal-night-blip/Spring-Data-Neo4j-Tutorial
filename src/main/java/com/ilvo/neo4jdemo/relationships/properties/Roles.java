@@ -4,25 +4,25 @@ import com.ilvo.neo4jdemo.utils.EmptyUtil;
 
 public class Roles {
 
-    private final String[] roles;
+    private final String[] characters;
 
-    private Roles(final String[] roles){
-        this.roles = roles;
+    private Roles(final String[] characters){
+        this.characters = characters;
     }
 
 
-    public static Roles of(final String[] roles){
+    public static Roles of(final String[] characters){
         
         
-        if(roles == null || roles.length == 0){
+        if(characters == null || characters.length == 0){
 
             throw new IllegalArgumentException("Nill or empty roles is not allowed");
 
         }else {
 
-            for(int i=0;i<roles.length;i++){
+            for(int i=0;i<characters.length;i++){
 
-                if(EmptyUtil.isEmpty(roles[i])){
+                if(EmptyUtil.isEmpty(characters[i])){
 
                     throw new IllegalArgumentException("empty role or roles is not allowed");
                     
@@ -31,11 +31,11 @@ public class Roles {
         }
     }
 
-        return new Roles(roles);
+        return new Roles(characters);
     }
 
-    public String[] getRoles(){
-        return roles;
+    public String[] get(){
+        return characters;
     }
     
 }

@@ -7,7 +7,9 @@ import com.ilvo.neo4jdemo.nodes.Person;
 import com.ilvo.neo4jdemo.nodes.properties.Name;
 
 public final class TransferUtil {
-
+    
+    private TransferUtil(){}
+    
     public static List<Name> personsToNames(List<Person> people){
         
         if(EmptyUtil.isEmpty(people)){

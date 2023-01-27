@@ -11,7 +11,7 @@ public class TagLineTest {
     public void should_tag_line(){
 
         TagLine tagLine = TagLine.of("foo");
-        assertThat(tagLine.getTagLine() == "foo");
+        assertThat(tagLine.get()).isEqualTo("foo");
     }
 
     @Test

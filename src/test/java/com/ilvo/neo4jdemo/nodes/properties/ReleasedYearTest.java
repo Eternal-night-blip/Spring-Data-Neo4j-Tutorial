@@ -11,8 +11,8 @@ public class ReleasedYearTest {
 
     @Test
     public void should_create_released_year(){
-        ReleasedYear bornYear = ReleasedYear.of(2000);
-        assertThat(bornYear.getReleasedYear() == 2000);
+        ReleasedYear releasedYear = ReleasedYear.of(2000);
+        assertThat(releasedYear.get()).isEqualTo(2000);
     }
 
     @Test

@@ -11,7 +11,7 @@ public class SummaryTest {
     public void should_creat_summary(){
 
         Summary summary = Summary.of("foo");
-        assertThat(summary.getSummary() == "foo");
+        assertThat(summary.get()).isEqualTo("foo");
     }
 
     @Test

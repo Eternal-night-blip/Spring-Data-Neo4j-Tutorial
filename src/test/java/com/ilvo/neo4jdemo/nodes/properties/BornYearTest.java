@@ -11,8 +11,8 @@ public class BornYearTest {
     
     @Test
     public void should_create_born_year(){
-        BornYear bornYear = BornYear.of(2000);
-        assertThat(bornYear.getBornYear() == 2000);
+        BornYear bornYear = BornYear.of(2003);
+        assertThat(bornYear.get()).isEqualTo(2003);
     }
 
     @Test

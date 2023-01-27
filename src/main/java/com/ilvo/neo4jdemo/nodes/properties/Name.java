@@ -4,23 +4,23 @@ import com.ilvo.neo4jdemo.utils.EmptyUtil;
 
 public final class Name {
 
-    private final String name;
+    private final String appellation;
 
-    private Name(final String name){
-        this.name = name;
+    private Name(final String appellation){
+        this.appellation = appellation;
     }
 
-    public static Name of(final String name){
+    public static Name of(final String appellation){
         
-        if(EmptyUtil.isEmpty(name)){
+        if(EmptyUtil.isEmpty(appellation)){
             throw new IllegalArgumentException("Empty name is not allowed");
         }
 
-        return new Name(name);
+        return new Name(appellation);
     }
 
-    public String getName(){
-        return name;
+    public String get(){
+        return appellation;
     }
     
 }

@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
+import org.stringtemplate.v4.compiler.CodeGenerator.listElement_return;
 
 import com.ilvo.neo4jdemo.dto.ActedInProperty;
 import com.ilvo.neo4jdemo.dto.ReviewedProperties;
@@ -57,48 +58,58 @@ public class Person {
         return name;
     }
 
-    public void follows(Person master){
+    public Integer getBornYear(){
+        return bornYear;
+    }
+
+    public Person follows(Person master){
         if (masters == null){
             masters = new LinkedList<>();
         }
         masters.add(master);
+        return master;
     }
 
-    public void actedIn(Movie movie,String[] roles){
+    public ActedIn actedIn(Movie movie,String[] roles){
         if ( actedIns == null){
             actedIns = new LinkedList<>();
         }
         ActedIn actedIn = new ActedIn(movie,roles);
         actedIns.add(actedIn);
+        return actedIn;
     }
     
-    public void reviewed(Movie movie,String summary, Integer rating){
+    public Reviewed reviewed(Movie movie,String summary, Integer rating){
         if ( revieweds == null){
             revieweds = new LinkedList<>();
         }
         Reviewed reviewed = new Reviewed(movie, summary, rating);
         revieweds.add(reviewed);
+        return reviewed;
     }
 
-    public void directed(Movie movie){
+    public Movie directed(Movie movie){
         if ( directedMovies == null){
             directedMovies = new LinkedList<>();
         }
         directedMovies.add(movie);
+        return movie;
     }
 
-    public void produced(Movie movie){
+    public Movie produced(Movie movie){
         if ( producedMovies == null){
             producedMovies = new LinkedList<>();
         }
         producedMovies.add(movie);
+        return movie;
     }
 
-    public void wrote(Movie movie){
+    public Movie wrote(Movie movie){
         if ( writtenMovies == null){
             writtenMovies = new LinkedList<>();
         }
         writtenMovies.add(movie);
+        return movie;
     }
 
     public boolean deleteActedIn(Movie movie){
@@ -191,7 +202,26 @@ public class Person {
         return result;
     }
     
-    public String infomation(){
+    @Override
+    public boolean equals(Object obj){
+
+        if(!(obj instanceof Person)){
+            return false;
+        }
+        
+        Person another = (Person)obj;
+        return this.name.equals(another.name) && this.bornYear.equals(another.bornYear);    
+    }
+    
+    @Override
+    public int hashCode(){
+        int result = name.hashCode();
+        result = 31*result+bornYear.hashCode();
+        return result;
+    }
+    
+    @Override
+    public String toString(){
         return "name: "+ name + ", born: "+ bornYear +",id: " + id;
     }
 

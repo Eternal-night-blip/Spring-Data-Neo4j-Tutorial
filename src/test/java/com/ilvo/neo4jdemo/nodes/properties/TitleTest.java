@@ -11,7 +11,7 @@ public class TitleTest {
     public void should_creat_tag_line(){
 
         Title title = Title.of("foo");
-        assertThat(title.getTitle() == "foo");
+        assertThat(title.get()).isEqualTo("foo");
     }
 
     @Test

@@ -11,7 +11,7 @@ public class NameTest {
     public void should_create_name(){
 
         Name name = Name.of("foo");
-        assertThat(name.getName() == "foo");
+        assertThat(name.get()).isEqualTo("foo");
     }
 
     @Test

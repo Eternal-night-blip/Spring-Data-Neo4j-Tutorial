@@ -40,8 +40,30 @@ public class Movie {
         return releasedYear;
     }
     
-    public String infomation(){
-        return "title: " + title + ", tagline: " + tagline + ", released: "+ releasedYear+",id: "+id; 
+    @Override
+    public boolean equals(Object obj){
+        if(obj == this){
+            return true;
+        }
+        if(!(obj instanceof Movie)){
+            return false;
+        }
+
+        Movie anothor = (Movie)obj;
+        return this.title.equals(anothor.title) && this.tagline.equals(anothor.tagline) && this.releasedYear.equals(anothor.releasedYear);     
+    }
+    
+    @Override
+    public int hashCode(){
+        int result  = this.title.hashCode();
+        result = 31 * result +this.tagline.hashCode();
+        result = 31 * result + this.releasedYear.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString(){
+        return "title: " + title + ", tagline: " + tagline + ", released: "+ releasedYear+", id: "+id; 
     }
 
 }

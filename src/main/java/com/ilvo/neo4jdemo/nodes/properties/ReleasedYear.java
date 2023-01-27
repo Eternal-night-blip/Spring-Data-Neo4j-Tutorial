@@ -4,36 +4,36 @@ import java.util.Calendar;
 
 public final class ReleasedYear {
 
-    private final Integer releasedYear;
+    private final Integer year;
 
-    private ReleasedYear(final Integer releasedYear){
-        this.releasedYear = releasedYear;
+    private ReleasedYear(final Integer year){
+        this.year = year;
     }
 
-    public static ReleasedYear of(final Integer releasedYear){
+    public static ReleasedYear of(final Integer year){
         
-        if(releasedYear == null){
+        if(year == null){
             throw new IllegalArgumentException("null released year is not allowed");
         }
         // the first movie in the world
         int released_year_of_Lunch_Hour_at_the_Lumiere_Factory  = 1895;
 
-        if(releasedYear < released_year_of_Lunch_Hour_at_the_Lumiere_Factory){
+        if(year < released_year_of_Lunch_Hour_at_the_Lumiere_Factory){
             throw new IllegalArgumentException("the released year of movie can't be less than "+released_year_of_Lunch_Hour_at_the_Lumiere_Factory);
         }
 
         Calendar calendar  = Calendar.getInstance();
         int thisYear = calendar.get(Calendar.YEAR); 
 
-        if(releasedYear>thisYear){
+        if(year>thisYear){
             throw new IllegalArgumentException("the year of movie released can't exceed this year "+thisYear);
         }
 
-        return new ReleasedYear(releasedYear);
+        return new ReleasedYear(year);
     }
 
-    public Integer getReleasedYear(){
-        return releasedYear;
+    public Integer get(){
+        return year;
     } 
     
 }

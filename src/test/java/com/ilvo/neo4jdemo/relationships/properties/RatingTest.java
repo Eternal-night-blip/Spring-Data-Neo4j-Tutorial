@@ -12,7 +12,7 @@ public class RatingTest {
     @Test
     public void should_create_rating(){
         Rating rating = Rating.of(18);
-        assertThat(rating.getRating() == 18);
+        assertThat(rating.get()).isSameAs(18);
     }
 
     @Test

@@ -6,6 +6,8 @@ import java.util.List;
 import com.ilvo.neo4jdemo.nodes.properties.Name;
 
 public final class EquivalentUtil {
+    
+    private EquivalentUtil(){}
 
     public static boolean doesEquivalent(List<Name> people,List<Name> another_people){
         
@@ -28,7 +30,7 @@ public final class EquivalentUtil {
 
                 now_index_iterator ++;
                 Name person_checked = iterator.next();
-                if(person.getName().equals(person_checked.getName())){
+                if(person.get().equals(person_checked.get())){
                     break;
                 }
                 

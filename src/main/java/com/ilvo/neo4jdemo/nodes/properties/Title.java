@@ -4,23 +4,23 @@ import com.ilvo.neo4jdemo.utils.EmptyUtil;
 
 public class Title {
 
-    private final String title;
+    private final String description;
 
-    private Title(final String title){
-        this.title = title;
+    private Title(final String description){
+        this.description = description;
     }
 
-    public static Title of(final String title){
+    public static Title of(final String description){
         
-        if(EmptyUtil.isEmpty(title)){
-            throw new IllegalArgumentException("Empty Title is not allowed");
+        if(EmptyUtil.isEmpty(description)){
+            throw new IllegalArgumentException("Empty title is not allowed");
         }
 
-        return new Title(title);
+        return new Title(description);
     }
     
-    public String getTitle(){
-        return title;
+    public String get(){
+        return description;
     }
 
 }
