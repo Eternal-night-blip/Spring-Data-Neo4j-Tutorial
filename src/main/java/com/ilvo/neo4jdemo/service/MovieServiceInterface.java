@@ -14,6 +14,7 @@ public interface MovieServiceInterface {
 
     public boolean deleteMovie(Title title);
 
+    public Movie getMovie(Title title);    
     
 
     public List<Person> getRelativePeople(Title title);

@@ -33,12 +33,12 @@ public class MovieService implements MovieServiceInterface{
             throw new IllegalArgumentException("Null or empty title/tagline/released year is not allowed");
         }
         
-        Movie movie_exist = movieRepository.findByTitle(title.getTitle());
+        Movie movie_exist = movieRepository.findByTitle(title.get());
         if (movie_exist != null){
             throw new ExistException("the movie "+title+" has already exist");
         }
         
-        final Movie new_movie = new Movie(title.getTitle(),tagLine.getTagLine(),releasedYear.getReleasedYear());
+        final Movie new_movie = new Movie(title.get(),tagLine.get(),releasedYear.get());
         return movieRepository.save(new_movie);
         
     }
@@ -50,10 +50,10 @@ public class MovieService implements MovieServiceInterface{
             throw new IllegalArgumentException("Null or empty title is not allowed");
         }
 
-        Movie movie = movieRepository.findByTitle(title.getTitle());
+        Movie movie = movieRepository.findByTitle(title.get());
         
         if(movie == null){
-            throw new NullPointerException("the movie which whill be deleted could not be found");
+            throw new EmptyException("the movie which whill be deleted could not be found");
         }
 
         movieRepository.delete(movie);
@@ -66,11 +66,27 @@ public class MovieService implements MovieServiceInterface{
         boolean delete = true;
         boolean not_delete = false;
         
-        Movie movie = movieRepository.findByTitle(title.getTitle());
+        Movie movie = movieRepository.findByTitle(title.get());
         if (movie != null){
             return not_delete;
         }
         return delete;
+    }
+    
+    @Override
+    public Movie getMovie(Title title){
+        
+        if( title == null ){
+            throw new IllegalArgumentException("null title is not allowed");
+        }
+
+        Movie movie = movieRepository.findByTitle(title.get());
+
+        if(movie == null){
+            throw new EmptyException("movie could not be found");
+        }
+
+        return movie;
     }
 
     @Override
@@ -79,13 +95,13 @@ public class MovieService implements MovieServiceInterface{
         if (title == null) {
             throw new IllegalArgumentException("Null or empty title is not allowed");
         }
-        
-        List<Person> people =personRepository.findAllRelativePeopleOfMovie(title.getTitle());
-        
-        if(EmptyUtil.isEmpty(people)){
-            throw new EmptyException("could not find any relative people of the movie "+title);
+
+        Movie movie = movieRepository.findByTitle(title.get());
+        if(movie == null){
+            throw new EmptyException("movie don't exist");
         }
-        return people;
+        
+        return personRepository.findAllRelativePeopleOfMovie(movie.getTitle());
     }
 
     @Override
@@ -94,13 +110,13 @@ public class MovieService implements MovieServiceInterface{
         if (title == null) {
             throw new IllegalArgumentException("Null or empty title is not allowed");
         }
-        
-        List<Person> directors = personRepository.findDirectorsOfMovie(title.getTitle());
-        
-        if(EmptyUtil.isEmpty(directors)){
-            throw new EmptyException("could not find any directors of the movie "+title);
+
+        Movie movie = movieRepository.findByTitle(title.get());
+        if(movie == null){
+            throw new EmptyException("movie don't exist");
         }
-        return directors;
+        
+        return personRepository.findDirectorsOfMovie(movie.getTitle());
     }
 
     @Override
@@ -109,13 +125,13 @@ public class MovieService implements MovieServiceInterface{
         if (title == null) {
             throw new IllegalArgumentException("Null or empty title is not allowed");
         }
-        
-        List<Person> actors = personRepository.findActorsOfMovie(title.getTitle());
-        
-        if(EmptyUtil.isEmpty(actors)){
-            throw new EmptyException("could not find any actors of the movie "+title);
+
+        Movie movie = movieRepository.findByTitle(title.get());
+        if(movie == null){
+            throw new EmptyException("movie don't exist");
         }
-        return actors;
+        
+        return personRepository.findActorsOfMovie(movie.getTitle());
     }
 
     @Override
@@ -124,13 +140,13 @@ public class MovieService implements MovieServiceInterface{
         if (title == null) {
             throw new IllegalArgumentException("Null or empty title is not allowed");
         }
-        
-        List<Person> screenWriters = personRepository.findScreenWritersOfMovie(title.getTitle());
-        
-        if(EmptyUtil.isEmpty(screenWriters)){
-            throw new EmptyException("could not find any screen writers of the movie "+title);
+
+        Movie movie = movieRepository.findByTitle(title.get());
+        if(movie == null){
+            throw new EmptyException("movie don't exist");
         }
-        return screenWriters;
+
+        return personRepository.findScreenWritersOfMovie(movie.getTitle());
     }
 
     @Override
@@ -139,13 +155,13 @@ public class MovieService implements MovieServiceInterface{
         if (title == null) {
             throw new IllegalArgumentException("Null or empty title is not allowed");
         }
-        
-        List<Person> producers = personRepository.findProducersOfMovie(title.getTitle());
-        
-        if(EmptyUtil.isEmpty(producers)){
-            throw new EmptyException("could not find any producers of the movie "+title);
+
+        Movie movie = movieRepository.findByTitle(title.get());
+        if(movie == null){
+            throw new EmptyException("movie don't exist");
         }
-        return producers;
+
+        return personRepository.findProducersOfMovie(movie.getTitle());
     }
 
     @Override
@@ -154,13 +170,13 @@ public class MovieService implements MovieServiceInterface{
         if (title == null) {
             throw new IllegalArgumentException("Null or empty title is not allowed");
         }
-
-        List<Person> reviewers = personRepository.findReviewersOfMovie(title.getTitle());
         
-        if(EmptyUtil.isEmpty(reviewers)){
-            throw new EmptyException("could not find any reviewers of the movie "+title);
+        Movie movie = movieRepository.findByTitle(title.get());
+        if(movie == null){
+            throw new EmptyException("movie don't exist");
         }
-        return reviewers;
+
+        return personRepository.findReviewersOfMovie(movie.getTitle());
     }
     
 }

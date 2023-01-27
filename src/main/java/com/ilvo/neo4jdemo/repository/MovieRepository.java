@@ -27,6 +27,10 @@ public interface MovieRepository extends Neo4jRepository<Movie,Long>{
     @Query("MATCH (movies:Movie) <-[:WROTE]- (writer:Person) WHERE writer.name = $writer_name RETURN movies")
     public List<Movie> findWrittenMovies(String writer_name);
     
+    @Query("MATCH (movies:Movie) <-[]- (person:Person) WHERE person.name = $person_name RETURN movies")
+    public List<Movie> findAllRelativeMovies(String person_name);
     
+    @Query("MATCH (person:Person) -[r]-> (:Movie) WHERE person.name = $person_name DELETE r")
+    public void deleteAllRelationshipsToAllMovies(String person_name);
     
 }

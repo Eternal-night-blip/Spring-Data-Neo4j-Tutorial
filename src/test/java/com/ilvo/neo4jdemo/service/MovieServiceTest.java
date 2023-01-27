@@ -45,6 +45,9 @@ public class MovieServiceTest {
                 .isThrownBy(() -> movieService.deleteMovie(null));
         
         assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(()-> movieService.getMovie(null));
+        
+        assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> movieService.getRelativePeople(null));
 
         assertThatExceptionOfType(IllegalArgumentException.class)
@@ -52,9 +55,6 @@ public class MovieServiceTest {
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> movieService.getActors(null));
-        
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> movieService.getDirectors(null));
         
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> movieService.getScreenWriters(null));
@@ -91,11 +91,11 @@ public class MovieServiceTest {
         assertThat(does_delete_movie).isTrue();
     
     }
-
+   
     @Test
     public void should_throw_exception_for_null_movie_in_delete_movie(){
         
-        assertThatExceptionOfType(NullPointerException.class)
+        assertThatExceptionOfType(EmptyException.class)
                 .isThrownBy(() -> movieService.deleteMovie(Title.of("null_movie_for_delete")));
 
     }
@@ -104,6 +104,20 @@ public class MovieServiceTest {
     public void should_does_delete_movie(){
         boolean does_delete_movie = movieService.doesDeleteMovie(Title.of("The Devil's Advocate"));
         assertThat(does_delete_movie).isFalse();
+    }
+    
+    @Test
+    public void should_get_movie(){
+        
+        Movie movie = movieService.getMovie(Title.of("The Devil's Advocate"));
+        boolean doGetMovie = movie.getTitle().equals("The Devil's Advocate");
+        assertThat(doGetMovie).isTrue();
+    }
+
+    @Test
+    public void should_throw_exception_for_null_movie_in_get_movie(){
+        assertThatExceptionOfType(EmptyException.class)
+                .isThrownBy(()->movieService.getMovie(Title.of("null_movie")));
     }
 
     @Test
@@ -123,11 +137,11 @@ public class MovieServiceTest {
         
         assertThat(EquivalentUtil.doesEquivalent(people_names_checked, names)).isTrue(); 
     }
-
+    
     @Test
-    public void should_throw_exception_for_null_people_in_get_relative_people(){
+    public void should_throw_exception_for_null_movie_in_get_relative_people(){
         assertThatExceptionOfType(EmptyException.class)
-                .isThrownBy(() -> movieService.getRelativePeople(Title.of("null_relative_people_for_get")));
+                .isThrownBy(() -> movieService.getRelativePeople(Title.of("null_movie_for_get")));
     }
 
     @Test
@@ -141,11 +155,11 @@ public class MovieServiceTest {
         List<Name> directors_names_checked = TransferUtil.personsToNames(directors_checked);
         assertThat(EquivalentUtil.doesEquivalent(directors_names_checked,names)).isTrue(); 
     }
-
+    
     @Test
-    public void should_throw_exception_for_null_directors_in_get_directors(){
+    public void should_throw_exception_for_null_movie_in_get_directors(){
         assertThatExceptionOfType(EmptyException.class)
-                .isThrownBy(() -> movieService.getDirectors(Title.of("null_directors_for_get")));
+                .isThrownBy(() -> movieService.getDirectors(Title.of("null_movie_for_get")));
     }
 
     @Test
@@ -165,9 +179,9 @@ public class MovieServiceTest {
     }
 
     @Test
-    public void should_throw_exception_for_null_actors_in_get_actors(){
+    public void should_throw_exception_for_null_movie_in_get_actors(){
         assertThatExceptionOfType(EmptyException.class)
-                .isThrownBy(() -> movieService.getActors(Title.of("null_actors_for_get")));
+                .isThrownBy(() -> movieService.getActors(Title.of("null_movie_for_get")));
     }
 
     @Test
@@ -183,9 +197,9 @@ public class MovieServiceTest {
     }
 
     @Test
-    public void should_throw_exception_for_null_screen_writers_in_get_screen_writers(){
+    public void should_throw_exception_for_null_movie_in_get_screen_writers(){
         assertThatExceptionOfType(EmptyException.class)
-                .isThrownBy(() -> movieService.getScreenWriters(Title.of("null_screen_writers_for_get")));
+                .isThrownBy(() -> movieService.getScreenWriters(Title.of("null_movie_for_get")));
     }
 
     @Test
@@ -199,11 +213,11 @@ public class MovieServiceTest {
         List<Name> producers_names_checked = TransferUtil.personsToNames(producers_checked);
         assertThat(EquivalentUtil.doesEquivalent(producers_names_checked,names)).isTrue();   
     }
-
+    
     @Test
-    public void should_throw_exception_for_null_producers_in_get_producers(){
+    public void should_throw_exception_for_null_movie_in_get_producers(){
         assertThatExceptionOfType(EmptyException.class)
-                .isThrownBy(() -> movieService.getProducers(Title.of("null_producers_for_get")));
+                .isThrownBy(() -> movieService.getProducers(Title.of("null_movie_for_get")));
     }
 
     @Test
@@ -219,9 +233,10 @@ public class MovieServiceTest {
     }
 
     @Test
-    public void should_throw_exception_for_null_reviewers_in_get_reviewers(){
+    public void should_throw_exception_for_null_movie_in_get_reviewers(){
         assertThatExceptionOfType(EmptyException.class)
-                .isThrownBy(() -> movieService.getReviewers(Title.of("null_reviewers_for_get")));
+                .isThrownBy(() -> movieService.getReviewers(Title.of("null_movie_for_get")));
     }
+
 
 }
