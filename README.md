@@ -1,8 +1,10 @@
-# <center> Spring Data Neo4j MoiveDataset Tutorial 2.0
+# <center> Spring Data Neo4j MoiveDataset Tutorial 2.5-Beta
 ### <center> 李毅佳
 ### <center> Email: 2314181884@qq.com
 
-这是Neo4j 官方数据集Movie的Spring Data Neo4j教程项目2.0版本，使用Gradle（7.6）进行构建与管理
+这是Neo4j 官方数据集Movie的Spring Data Neo4j教程项目2.5版本，使用Gradle（7.6）进行构建与管理
+本项目为2.5版本，采用Spring Data Neo4j操控数据库，在2.0版本基础上并且增加Service层，命令行应用与Repository解耦。
+在2.0的基础上还增加了入参检测等等，单元测试与集成测试。
 ## 本项目依赖配置：
 SpringBoot 3.0.1版本
 Java 17
@@ -19,7 +21,15 @@ Spring Shell (3.0.0-RC1)
 #### 启动
 ```
 ./gradlew build
-java -jar ./build/libs/neo4jdemo-2.0.jar
+java -jar ./build/libs/neo4jdemo-2.5.jar
+```
+如果你想要在build的时候不进行test
+```
+./gradlew build -x test
+```
+你单独做进行测试的时候可以通过IDE或者输入以下命令进行全体测试，当然了你可以指定单个类或者方法进行测试
+```
+./gradlew test
 ```
 #### 清除
 当你修改代码后需要清除之前编译好的文件，然后重新启动
