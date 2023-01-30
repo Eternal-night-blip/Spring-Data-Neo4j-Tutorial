@@ -1,1 +1,5 @@
 rootProject.name = 'neo4jdemo'
+
+include 'neo4jdemo-core'
+include 'neo4jdemo-cli'
+include 'neo4jdemo-api'

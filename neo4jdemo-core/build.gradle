@@ -1,0 +1,13 @@
+plugins {
+	id 'maven-publish'
+	id 'io.spring.dependency-management'
+} 
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+springBoot {
+    mainClass = 'com.ilvo.neo4jdemo.core.Bootstrap'
+}
